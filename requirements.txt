@@ -1,0 +1,11 @@
+numpy
+scipy
+matplotlib
+minio
+tqdm
+joblib
+transformers
+joblib
+
+test-tube
+minio-connector
