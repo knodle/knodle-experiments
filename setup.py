@@ -18,7 +18,7 @@ with open("README.md", "r") as readme_file:
     long_description = readme_file.read()
 
 setup(
-    name="knodle_experiments",
+    name="knodle-experiments",
     version=VERSION["__version__"],
     description="Evaluation code to use knodle.",
     long_description_content_type="text/markdown",

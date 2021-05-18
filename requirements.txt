@@ -1,11 +1,19 @@
+# ML
 numpy
 scipy
-matplotlib
-minio
-tqdm
-joblib
 transformers
+
+# data
+minio
 joblib
 
+# helpers
+matplotlib
 test-tube
+tqdm
+
+# main library
+knodle
+
+## From knodle private PyPi (so far):
 minio-connector

@@ -4,3 +4,6 @@ dist/
 build/
 and_dev
 **/__pycache__/
+
+
+notebooks/

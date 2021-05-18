@@ -1,7 +1,7 @@
 from typing import Dict
 from torch.optim import AdamW
 
-from knodle.trainer.knn_denoising.knn_denoising import KnnDenoisingTrainer
+from knodle.trainer.knn_denoising.knn import KnnDenoisingTrainer
 from knodle.trainer.knn_denoising.config import KNNConfig
 
 from knodle_experiments.training.model import get_model
@@ -13,7 +13,7 @@ def get_knn_config(model, config):
     k = params.get("k")
     k = 1 if k is None else k
     custom_model_config = KNNConfig(
-        optimizer=AdamW(model.parameters(), lr=params.get('learning_rate')),
+        optimizer=AdamW,
         epochs=params.get('num_epochs'),
         k=k, radius=params.get("radius", None),
         filter_non_labelled=params.get("filter_empty_labels")

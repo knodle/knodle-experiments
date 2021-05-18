@@ -3,7 +3,7 @@ from typing import Dict
 from transformers import AdamW
 
 from knodle.trainer.snorkel.config import SnorkelConfig, SnorkelKNNConfig
-from knodle.trainer.snorkel.snorkel_trainer import SnorkelTrainer, SnorkelKNNDenoisingTrainer
+from knodle.trainer.snorkel.snorkel import SnorkelTrainer, SnorkelKNNDenoisingTrainer
 
 from knodle_experiments.training.model import get_model
 
@@ -14,7 +14,7 @@ def get_snorkel_config(model, config):
     params = config.get("hyp_params")
     if params.get("k") is not None:
         custom_model_config = SnorkelKNNConfig(
-            optimizer=AdamW(model.parameters(), lr=params.get('learning_rate')),
+            optimizer=AdamW,
             epochs=params.get('num_epochs'),
             k=params.get("k", None),
             radius=params.get("radius", None),

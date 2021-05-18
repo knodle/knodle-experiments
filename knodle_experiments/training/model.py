@@ -1,8 +1,8 @@
 from typing import Dict
 
-from transformers import AutoModelForSequenceClassification, AdamW
+from transformers import AutoModelForSequenceClassification
 
-from knodle.model.logistic_regression.logistic_regression_model import LogisticRegressionModel
+from knodle.model.logistic_regression_model import LogisticRegressionModel
 
 
 def get_model(config: Dict, num_classes: int = 2):

@@ -11,6 +11,7 @@ def get_trainer(config: Dict, processed_dict: Dict, data_dict: Dict = None):
         processed_dict.get('mapping_rules_labels_t'), config
     ]
 
+
     if config.get("method") == "majority":
         trainer = get_majority_trainer(processed_data_dict=processed_dict, config=config, data_dict=data_dict)
     elif config.get("method") == "knn":
