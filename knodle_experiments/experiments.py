@@ -11,7 +11,6 @@ def get_trainer(config: Dict, processed_dict: Dict, data_dict: Dict = None):
         processed_dict.get('mapping_rules_labels_t'), config
     ]
 
-
     if config.get("method") == "majority":
         trainer = get_majority_trainer(processed_data_dict=processed_dict, config=config, data_dict=data_dict)
     elif config.get("method") == "knn":
@@ -20,5 +19,9 @@ def get_trainer(config: Dict, processed_dict: Dict, data_dict: Dict = None):
         trainer = get_snorkel_trainer(processed_data_dict=processed_dict, config=config, data_dict=data_dict)
     else:
         raise ValueError("The given method is not specified")
+
+    trainer.trainer_config.class_weights = None
+    trainer.trainer_config.seed = 42
+    trainer.trainer_config.output_classes = processed_dict["mapping_rules_labels_t"].shape[1]
 
     return trainer

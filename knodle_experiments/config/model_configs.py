@@ -31,7 +31,7 @@ def get_standard_bert_config(dataset: str) -> Dict:
         "data_dir": os.path.join(os.getcwd(), "data", dataset),
         "model": {
             "type": "transformer",
-            "name": "distilbert-base-uncased"
+            "name": "bert-base-uncased"
         },
         "hyp_params": {
             # training related

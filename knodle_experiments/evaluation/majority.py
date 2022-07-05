@@ -17,6 +17,7 @@ def majority_sklearn_report(
     kwargs = {"choose_random_label": True}
     majority_y = np.apply_along_axis(probabilies_to_majority_vote, axis=1, arr=rule_counts_probs, **kwargs)
 
+    print(labels_y.shape, majority_y.shape)
     sklearn_report = classification_report(labels_y, majority_y, output_dict=True)
 
     return sklearn_report

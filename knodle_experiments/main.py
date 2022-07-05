@@ -6,7 +6,7 @@ from uuid import uuid4
 
 import torch
 
-from knodle_experiments.data.loaders import load_dataset
+from knodle_experiments.data.loaders import load_knodle_format_data
 from knodle_experiments.data.download import download_dataset
 from knodle_experiments.data.preprocess import preprocess_data
 
@@ -20,14 +20,14 @@ logger = logging.getLogger(__name__)
 
 def run_experiment(
         config: Dict, download_data: bool = True, processed_dict: Dict = None, disable_majority_vote: bool = False,
-        device=None
+        device=None, result_path: str = None
 ):
     # Download
     if download_data:
         download_dataset(config.get("dataset"), config.get("data_dir"))
 
     # Load
-    data_dict = load_dataset(config.get("dataset"), config.get("data_dir"))
+    data_dict = load_knodle_format_data(config.get("data_dir"))
 
     # Preprocess
     if processed_dict is None:
@@ -39,11 +39,15 @@ def run_experiment(
     if device is not None:
         trainer.trainer_config.device = device
     # run training
+    print(trainer.trainer_config.optimizer)
     trainer.train()
 
     # perform evaluation
     run_id = str(uuid4())
-    result_path = os.path.join(config.get("data_dir"), "results", run_id)
+    if result_path is None:
+        result_path = os.path.join(config.get("data_dir"), "results", run_id)
+    else:
+        result_path = os.path.join(result_path, run_id)
     config["result_path"] = result_path
     config["data_keys"] = list(data_dict.keys())
 

@@ -18,6 +18,7 @@ def trainer_evaluation(trainer: Trainer, preprocessed_dict: Dict, result_path: s
                 preprocessed_dict.get(f"{split}_y")
             ]
             results_dict = trainer.test(*args)
+            print(results_dict)
             results_dicts[split] = results_dict
             with open(os.path.join(result_path, f"{split}_result_dict.json"), "w") as f:
                 json.dump(results_dict, f)

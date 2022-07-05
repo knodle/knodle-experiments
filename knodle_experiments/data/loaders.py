@@ -102,6 +102,27 @@ def load_spam_data(data_dir: str) -> [List[str], np.array, np.array, np.array, L
     return data_dict
 
 
+def load_knodle_format_data(data_dir: str, splits=["train", "dev", "test"], text_col: str = "sample",
+                            label_col: str = "label_id"):
+    data_dict = dict()
+
+    for split in splits:
+        df_path = os.path.join(data_dir, f"df_{split}.csv")
+        if not os.path.isfile(df_path):
+            continue
+        df = pd.read_csv(df_path, sep=";")
+        data_dict[f"{split}_x"] = df[text_col].tolist().copy()
+
+        if label_col in df.columns:
+            data_dict[f"{split}_y"] = df[label_col].values
+
+        data_dict[f"{split}_rule_matches_z"] = load(os.path.join(data_dir, f"{split}_rule_matches_z.lib"))
+
+    data_dict["mapping_rules_labels_t"] = load(os.path.join(data_dir, "mapping_rules_labels_t.lib"))
+
+    return data_dict
+
+
 def load_dataset(dataset: str, data_dir: str):
     known_dataset = ["imdb", "tacred", "spouse", "spam"]
     if dataset not in known_dataset:
@@ -115,3 +136,7 @@ def load_dataset(dataset: str, data_dir: str):
         return load_spouse_data(data_dir)
     elif dataset == "spam":
         return load_spam_data(data_dir)
+    elif dataset == "sms":
+        return load_knodle_format_data(data_dir, text_col="sample", label_col="label")
+    elif dataset == "trec":
+        return load_knodle_format_data(data_dir, text_col="sample", label_col="label")

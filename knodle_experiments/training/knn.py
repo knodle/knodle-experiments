@@ -1,8 +1,8 @@
 from typing import Dict
 from torch.optim import AdamW
 
-from knodle.trainer.knn_denoising.knn import KnnDenoisingTrainer
-from knodle.trainer.knn_denoising.config import KNNConfig
+from knodle.trainer.knn_aggregation.knn import kNNAggregationTrainer
+from knodle.trainer.knn_aggregation.config import kNNConfig
 
 from knodle_experiments.training.model import get_model
 from knodle_experiments.data.preprocess import create_tfidf_input
@@ -12,7 +12,7 @@ def get_knn_config(model, config):
     params = config.get("hyp_params")
     k = params.get("k")
     k = 1 if k is None else k
-    custom_model_config = KNNConfig(
+    custom_model_config = kNNConfig(
         optimizer=AdamW,
         epochs=params.get('num_epochs'),
         k=k, radius=params.get("radius", None),
@@ -38,7 +38,7 @@ def load_tfidf_neighborhood_matrix(config: Dict, data_dict: Dict = None):
 
 def get_knn_trainer(
         processed_data_dict: Dict, config: Dict, data_dict: Dict = None
-) -> KnnDenoisingTrainer:
+) -> kNNAggregationTrainer:
     """Train a logistic regression model; with SimpleDsModelTrainer."""
 
     knn_feature_matrix = load_tfidf_neighborhood_matrix(config=config, data_dict=data_dict)
@@ -47,7 +47,7 @@ def get_knn_trainer(
 
     custom_model_config = get_knn_config(model, config)
 
-    trainer = KnnDenoisingTrainer(
+    trainer = kNNAggregationTrainer(
         model=model,
         mapping_rules_labels_t=processed_data_dict.get("mapping_rules_labels_t"),
         model_input_x=processed_data_dict.get("train_x"),
